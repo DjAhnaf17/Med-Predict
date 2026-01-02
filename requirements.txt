@@ -1,0 +1,13 @@
+pandas
+numpy
+matplotlib
+streamlit
+scikit-learn
+pywhatkit
+fpdf
+plotly
+pillow
+PIL
+qrcode
+pyqrcode
+
