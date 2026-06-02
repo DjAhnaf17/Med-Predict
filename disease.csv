@@ -1,0 +1,21 @@
+Fever,Cough,Headache,Fatigue,Nausea,Vomiting,Rash,Joint_Pain,Sore_Throat,Shortness_of_Breath,Disease
+1,1,1,1,0,0,0,0,1,0,Common Cold
+1,1,1,1,1,0,0,1,1,0,Influenza
+1,0,1,1,1,1,1,1,0,0,Dengue
+1,0,1,1,1,1,0,1,0,0,Malaria
+1,0,1,1,1,0,0,0,0,0,Typhoid
+1,1,1,1,0,0,0,0,0,1,Pneumonia
+1,1,1,1,0,0,0,0,0,1,COVID-19
+0,1,0,1,0,0,0,0,1,1,Asthma
+0,0,1,1,1,1,0,0,0,0,Migraine
+0,0,0,1,1,1,0,0,0,0,Food Poisoning
+1,1,0,1,0,0,0,0,0,1,Bronchitis
+0,0,1,1,1,0,0,0,0,0,Gastritis
+0,0,1,1,1,0,0,0,0,0,Peptic Ulcer
+0,0,0,1,0,0,1,1,0,0,Arthritis
+1,0,1,1,0,0,1,0,0,0,Chickenpox
+1,1,0,1,0,0,0,0,1,0,Tonsillitis
+0,0,0,1,0,0,1,0,0,0,Eczema
+0,0,0,1,0,0,1,0,0,0,Psoriasis
+1,0,1,1,1,0,0,0,0,0,Hepatitis A
+1,0,1,1,1,0,0,0,0,0,Hepatitis B

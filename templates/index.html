@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPredict AI — Disease Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated background blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar glass-nav">
+        <div class="nav-brand">
+            <i class="fas fa-heartbeat pulse-icon"></i>
+            <span>MediPredict <span class="ai-badge">AI</span></span>
+        </div>
+        <div class="nav-tagline">Intelligent Disease Prediction System</div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">
+                <span class="gradient-text">AI-Powered</span> Disease Prediction
+            </h1>
+            <p class="hero-sub">Enter your symptoms to get an instant prediction using advanced Machine Learning models</p>
+            <div class="model-badges">
+                <span class="badge badge-rf"><i class="fas fa-tree"></i> Random Forest</span>
+                <span class="badge badge-svm"><i class="fas fa-vector-square"></i> SVM</span>
+                <span class="badge badge-nb"><i class="fas fa-brain"></i> Naïve Bayes</span>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-grid">
+            <!-- Patient Details Card -->
+            <div class="glass-card patient-card">
+                <div class="card-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h2>Patient Details</h2>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Full Name *</label>
+                    <input type="text" id="patientName" class="glass-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-birthday-cake"></i> Age *</label>
+                        <input type="number" id="patientAge" class="glass-input" placeholder="Age" min="1" max="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-alt"></i> Date of Birth *</label>
+                        <input type="date" id="patientDob" class="glass-input" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-tint"></i> Blood Group *</label>
+                        <select id="bloodGroup" class="glass-input glass-select">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A−</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B−</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O−</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB−</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Phone Number *</label>
+                        <input type="tel" id="patientPhone" class="glass-input" placeholder="+91 XXXXX XXXXX" required>
+                    </div>
+                </div>
+
+                <!-- Model Selection -->
+                <div class="card-header" style="margin-top: 1.5rem;">
+                    <i class="fas fa-robot"></i>
+                    <h2>Select ML Model</h2>
+                </div>
+                <div class="model-selector">
+                    <label class="model-option selected" data-model="random_forest">
+                        <input type="radio" name="model" value="random_forest" checked>
+                        <div class="model-icon">🌳</div>
+                        <div class="model-name">Random Forest</div>
+                        <div class="model-desc">Ensemble learning for high accuracy</div>
+                    </label>
+                    <label class="model-option" data-model="svm">
+                        <input type="radio" name="model" value="svm">
+                        <div class="model-icon">⚡</div>
+                        <div class="model-name">SVM</div>
+                        <div class="model-desc">Support Vector Machine classifier</div>
+                    </label>
+                    <label class="model-option" data-model="naive_bayes">
+                        <input type="radio" name="model" value="naive_bayes">
+                        <div class="model-icon">🧠</div>
+                        <div class="model-name">Naïve Bayes</div>
+                        <div class="model-desc">Probabilistic Bayesian classifier</div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Symptoms Card -->
+            <div class="glass-card symptoms-card">
+                <div class="card-header">
+                    <i class="fas fa-stethoscope"></i>
+                    <h2>Select Your Symptoms</h2>
+                </div>
+                <p class="symptoms-hint">Check all symptoms you are currently experiencing:</p>
+
+                <div class="symptoms-grid">
+                    {% set symptom_icons = {
+                        'Fever': 'fa-thermometer-three-quarters',
+                        'Cough': 'fa-lungs',
+                        'Headache': 'fa-brain',
+                        'Fatigue': 'fa-bed',
+                        'Nausea': 'fa-face-dizzy',
+                        'Vomiting': 'fa-droplet',
+                        'Rash': 'fa-circle-dot',
+                        'Joint_Pain': 'fa-bone',
+                        'Sore_Throat': 'fa-face-meh-blank',
+                        'Shortness_of_Breath': 'fa-wind'
+                    } %}
+                    {% for symptom in symptoms %}
+                    <label class="symptom-chip" data-symptom="{{ symptom }}">
+                        <input type="checkbox" name="symptom" value="{{ symptom }}">
+                        <i class="fas {{ symptom_icons.get(symptom, 'fa-circle-plus') }}"></i>
+                        <span>{{ symptom.replace('_', ' ') }}</span>
+                        <div class="check-indicator"><i class="fas fa-check"></i></div>
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div class="selected-count">
+                    <span id="symptomCount">0</span> symptom(s) selected
+                </div>
+
+                <!-- Predict Button -->
+                <button class="predict-btn" id="predictBtn" onclick="predictDisease()">
+                    <i class="fas fa-microscope"></i>
+                    <span>Predict Disease</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section (Hidden initially) -->
+        <div class="results-section" id="resultsSection" style="display:none;">
+
+            <!-- Main Result Card -->
+            <div class="glass-card result-main-card">
+                <div class="result-header">
+                    <div class="result-icon" id="resultEmoji">🏥</div>
+                    <div class="result-title-group">
+                        <p class="result-label">Predicted Disease</p>
+                        <h2 class="result-disease" id="resultDisease">-</h2>
+                        <div class="severity-badge" id="severityBadge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span id="severityText">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recommendation-box">
+                    <i class="fas fa-notes-medical"></i>
+                    <div>
+                        <strong>Medical Recommendation:</strong>
+                        <p id="recommendationText">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Models Comparison -->
+            <div class="glass-card models-comparison-card">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar"></i>
+                    <h2>All Models Comparison</h2>
+                </div>
+                <div class="models-grid" id="modelsGrid"></div>
+            </div>
+
+            <!-- Actions Card -->
+            <div class="glass-card actions-card">
+                <div class="card-header">
+                    <i class="fas fa-file-medical"></i>
+                    <h2>Actions</h2>
+                </div>
+                <div class="actions-grid">
+                    <button class="action-btn pdf-btn" onclick="generatePDF()">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Download PDF Report</span>
+                    </button>
+                    <button class="action-btn whatsapp-btn" onclick="sendWhatsApp()">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Send via WhatsApp</span>
+                    </button>
+                    <button class="action-btn reset-btn" onclick="resetForm()">
+                        <i class="fas fa-redo"></i>
+                        <span>New Prediction</span>
+                    </button>
+                </div>
+                <div id="actionStatus" class="action-status" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display:none;">
+            <div class="loading-content glass-card">
+                <div class="dna-loader">
+                    <div class="dna-strand"></div>
+                    <div class="dna-strand"></div>
+                </div>
+                <p class="loading-text" id="loadingText">Analyzing symptoms...</p>
+                <div class="loading-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>⚠️ <strong>Disclaimer:</strong> MediPredict AI is for educational purposes only. Always consult a qualified healthcare professional for medical advice.</p>
+        <p style="margin-top:6px; opacity:0.6;">Built with Flask • scikit-learn • Random Forest • SVM • Naïve Bayes</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
